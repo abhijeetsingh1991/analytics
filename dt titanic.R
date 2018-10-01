@@ -1,6 +1,6 @@
 # Decision Tree - Classification
 #we want predict for combination of input variables, is a person likely to servive or not
-
+?frame
 #import data from online site
 path = 'https://raw.githubusercontent.com/thomaspernet/data_csv_r/master/data/titanic_csv.csv'
 titanic <-read.csv(path)
@@ -9,6 +9,7 @@ names(titanic)
 data = titanic[,c(2,3,5,6,7)]  #select few columns only
 head(data)
 View(titanic)
+par(mfrow=c(1,1))
 #load libraries
 library(rpart)
 library(rpart.plot)
@@ -16,15 +17,16 @@ library(rpart.plot)
 fit <- rpart(survived~., data = data, method = 'class')
 fit
 rpart.plot(fit, extra = 106, cex=.8,nn=T)  #plot
-
+?rpart
 printcp(fit) #select complexity parameter
-prunetree2 = prune(fit, cp=.014)
+prunetree2 = prune(fit, cp=.015)
 rpart.plot(prunetree2, cex=.8,nn=T)
 prunetree2
 nrow(data)
 
 #Predict class category or probabilities
-(testdata = sample_n(data,2))
+library(dplyr)
+(testdata = sample_n(data,5))
 predict(prunetree2, newdata=testdata, type='class')
 predict(prunetree2, newdata=testdata, type='prob')
 
