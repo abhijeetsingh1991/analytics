@@ -46,12 +46,12 @@ rules2 = apriori (Groceries, parameter = list (supp = 0.01, conf = 0.5, minlen=2
 inspect(rules2[1:15])
 
 #Find what factors influenced an event ‘X’
-rules3 = apriori (data=Groceries, parameter=list (supp=0.002,conf = 0.8), appearance = list (default="lhs",rhs="whole milk"), control = list (verbose=F))
+rules3 = apriori (data=Groceries, parameter=list (supp=0.002,conf = 0.8), appearance = list (default="lhs",rhs="whole milk"), control = list (verbose=T))
 inspect(rules3[1:5])
 inspect(rules3)
 
 #Find out what events were influenced by a given event
-subset1 = subset(rules2, appearance = list (default="lhs",rhs="whole milk"))
+subset1 = subset(rules2,rhs="whole milk")
 inspect(subset1)
 subset1 = subset(rules2, subset=rhs %in% 'bottled beer' )
 inspect(subset1)
@@ -79,3 +79,4 @@ plot(subset1[1:10], measure=c("support", "lift"), shading="confidence")
 rules4 = apriori (data=Groceries, parameter=list (supp=0.001,conf = 0.4), appearance = list (default="rhs",lhs=c('tropical fruit','herbs')), control = list (verbose=F))
 inspect(rules4[1:5])
 inspect(rules4)
+
